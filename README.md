@@ -37,4 +37,4 @@ gradle clean test -DtypeProperties=locale
 gradle clean test -DtypeProperties=remote
 ```
 
-Токен передается через параметр <code>-Dtoken</code>
+> Токен передается через параметр <code>-Dtoken</code>
