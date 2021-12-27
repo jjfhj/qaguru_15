@@ -1,6 +1,8 @@
 package com.github.jjfhj.tests;
 
+import com.github.jjfhj.config.ApiConfig;
 import io.qameta.allure.*;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -11,11 +13,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
-import static com.github.jjfhj.tests.TestData.MVIDEO_URL;
 import static io.qameta.allure.Allure.step;
 
 @DisplayName("Тестирование веб-приложения М.Видео")
 public class MvideoTest extends TestBase {
+    ApiConfig apiConfig = ConfigFactory.create(ApiConfig.class, System.getProperties());
 
     @ValueSource(strings = {"Ирригатор B.Well WI-911 150мл (2 насадки)",
             "Ирригатор B.Well WI-912 (5 насадок)"})
@@ -29,7 +31,7 @@ public class MvideoTest extends TestBase {
     @Link(name = "М.Видео", url = "https://www.mvideo.ru/")
     void searchResultsTest(String searchQuery) {
         step("Открыть главную страницу М.Видео", () -> {
-            open(MVIDEO_URL);
+            open(apiConfig.baseURL());
         });
         step("Найти ирригаторы торговой марки B.Well", () -> {
             $(".input__field").setValue("Ирригатор B.Well").pressEnter();
@@ -53,7 +55,7 @@ public class MvideoTest extends TestBase {
     @Link(name = "М.Видео", url = "https://www.mvideo.ru/")
     void filterCategoryTest(String searchQuery, String categoryName) {
         step("Открыть главную страницу М.Видео", () -> {
-            open(MVIDEO_URL);
+            open(apiConfig.baseURL());
         });
         step("Найти товар " + searchQuery, () -> {
             $(".input__field").setValue(searchQuery).pressEnter();
