@@ -18,21 +18,18 @@ public class WebDriverUtil {
         ChromeOptions chromeOptions = new ChromeOptions();
 
         chromeOptions.addArguments("--no-sandbox");
-        // chromeOptions.addArguments("--disable-infobars");
         chromeOptions.addArguments("--enable-automation");
         chromeOptions.addArguments("--disable-popup-blocking");
         chromeOptions.addArguments("--disable-notifications");
         chromeOptions.addArguments("--disable-gpu");
 
-        if (!System.getProperty("typeProperties").equals("remote")) {
+        if (System.getProperty("typeProperties").equals("remote")) {
             capabilities.setCapability("enableVNC", true);
-            capabilities.setCapability("enableVideo", true);
+            capabilities.setCapability("enableVideo", false);
             Configuration.remote = webConfig.remoteWebDriver();
         }
 
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         Configuration.browserCapabilities = capabilities;
-/*        Configuration.timeout = 10000;
-        Configuration.pageLoadTimeout = 10000;*/
     }
 }
